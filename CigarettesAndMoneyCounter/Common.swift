@@ -140,30 +140,6 @@ func decimalFormatToCurency(_ num: Double) -> String{
 
 }
 
-public func cigarettesToPackDescription(_ cigs: Int, sufix: String) -> String
-{ 
-
-    var ret = sufix
-    let userDefaults:UserDefaults = UserDefaultsDataController().loadUserDefaults()
-    
-    let cigsInPack = userDefaults.amountOfCigarettsInOnePack
-        
-    if (cigsInPack < cigs)
-    {
-        let packs = cigs/cigsInPack
-        
-        if(packs >= 2){
-            ret = "%@ (%d PACKS)"
-        }
-        else{
-            ret = "%@ (%d PACK)"}
-        
-        ret = NSString(format:ret as NSString, sufix, packs) as String
-    }
-    
-    return ret
-
-}
 
 public func segmentToDays(_ segment: Int) -> Double
 {

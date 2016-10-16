@@ -143,7 +143,7 @@ class CigaretteRecordManager {
     
     
     //field name = reason/
-    func  calculateGraphDataByFieldName(_ fromDate: Date, toDate: Date, fieldName: String, orderByField: String = "cigarettes") -> NSArray
+    func  calculateGraphDataByFieldName(_ fromDate: Date, toDate: Date, fieldName: String, orderByField: String = "cost") -> NSArray
     {
         //where condition
         let predicate = NSPredicate(format:"%@ >= addDate AND %@ <= addDate", toDate as CVarArg, fromDate as CVarArg)
@@ -151,9 +151,8 @@ class CigaretteRecordManager {
         
         let expressionSumCigarettes = NSExpressionDescription()
         expressionSumCigarettes.name = "sumOftotalCigarettes"
-        expressionSumCigarettes.expression = NSExpression(forFunction: "sum:",
-            arguments:[NSExpression(forKeyPath: "cigarettes")])
-        expressionSumCigarettes.expressionResultType = .integer32AttributeType
+        expressionSumCigarettes.expression = NSExpression(forFunction: "sum:", arguments:[NSExpression(forKeyPath: "cost")])
+        expressionSumCigarettes.expressionResultType = .decimalAttributeType
        
         
                 //    and then a fetch request which fetches only this sum:
@@ -182,7 +181,7 @@ class CigaretteRecordManager {
         
     }
     //field name = reason/
-    func  calculateGraphDataByExpresion(_ fromDate: Date, toDate: Date, orderByField: String = "cigarettes") -> NSArray
+    func  calculateGraphDataByExpresion(_ fromDate: Date, toDate: Date, orderByField: String = "cost") -> NSArray
     {
         //where condition
         let predicate = NSPredicate(format:"%@ >= addDate AND %@ <= addDate", toDate as CVarArg, fromDate as CVarArg)
@@ -191,8 +190,8 @@ class CigaretteRecordManager {
         let expressionSumCigarettes = NSExpressionDescription()
         expressionSumCigarettes.name = "sumOftotalCigarettes"
         expressionSumCigarettes.expression = NSExpression(forFunction: "sum:",
-                                                          arguments:[NSExpression(forKeyPath: "cigarettes")])
-        expressionSumCigarettes.expressionResultType = .integer32AttributeType
+                                                          arguments:[NSExpression(forKeyPath: "cost")])
+        expressionSumCigarettes.expressionResultType = .decimalAttributeType
         
         
         //    and then a fetch request which fetches only this sum:
@@ -222,7 +221,7 @@ class CigaretteRecordManager {
     
     
     //field name = reason/
-    func  calculateHorizontalGraphDataByFieldName(_ fromDate: Date, toDate: Date, fieldName: String, orderByField: String = "cigarettes") -> NSArray
+    func  calculateHorizontalGraphDataByFieldName(_ fromDate: Date, toDate: Date, fieldName: String, orderByField: String = "cost") -> NSArray
     {
         
         let cigRec:CigaretteRecord = CigaretteRecord()

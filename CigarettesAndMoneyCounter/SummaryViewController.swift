@@ -82,7 +82,8 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
     
     func initBarChartUI()
     {
-        barChart.chartDescription?.text = ""
+        barChart.chartDescription?.text = "Comparison With Previous Period"
+        barChart.chartDescription?.textColor = UIColor.white
         barChart.backgroundColor = UIColor.clear
         barChart.xAxis.labelPosition = XAxis.LabelPosition.bottom
         
@@ -122,6 +123,8 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
     
     func initHorizontalChartUI()
     {
+        horizontChart.chartDescription?.text = "Expenses Timeline"
+        horizontChart.chartDescription?.textColor = UIColor.white
         
         horizontChart.chartDescription?.text = ""
         horizontChart.backgroundColor = UIColor.clear
@@ -155,11 +158,17 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         
     }
     
+    //MARK: INIT PIE
     func initPieChartUI()
     {
-        pieChart.chartDescription?.text = ""
-        
-        pieChart.noDataText = "you don't smoke at this period"
+        pieChart.chartDescription?.text = "Expenses by Category"
+        pieChart.chartDescription?.textColor = UIColor.white
+        pieChart.chartDescription?.font = NSUIFont.systemFont(ofSize: 14.0)
+        pieChart.chartDescription?.yOffset = -10
+        pieChart.chartDescription?.xOffset = 165
+        //pieChart.chartDescription?.position
+        pieChart.noDataText = "you don't spend at this period"
+        pieChart.setExtraOffsets(left: 0, top: 0, right: 0, bottom: 10)//View setExtraOffsetsWithLeft:30 top:0 right:30 bottom:0
         
         pieChart.backgroundColor = UIColor.clear
        
@@ -167,13 +176,21 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         ///'labels' is deprecated: Use `entries`.
         pieChart.legend.textColor = UIColor.white
         pieChart.legend.verticalAlignment = Legend.VerticalAlignment.top
-        pieChart.legend.orientation = Legend.Orientation.vertical
+        pieChart.legend.orientation = Legend.Orientation.horizontal
         pieChart.legend.direction = Legend.Direction.leftToRight
-        pieChart.legend.drawInside = true
+        pieChart.legend.drawInside = false
+        pieChart.legend.form  = .circle
         pieChart.legend.textColor = UIColor.white
+        pieChart.legend.font = NSUIFont.systemFont(ofSize: 12.0)
+  
+        pieChart.usePercentValuesEnabled = true
         pieChart.drawEntryLabelsEnabled = false
+     //   pieChart.dragDecelerationEnabled = true
         pieChart.isHidden = true
+        pieChart.holeRadiusPercent = 0.7
+     //   pieChart.drawHoleEnabled = false
         
+
         
     }
     
@@ -393,16 +410,20 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         let cigRecord = CigaretteRecordManager()
         let smokeAndCost = cigRecord.calculateAmountAndCost(curentDate, toDate: toDate)
         
-        smoked.text  = String(smokeAndCost.smoked)
-        cost.text = decimalFormatToCurency(smokeAndCost.cost)
-        smokedLabel.text = cigarettesToPackDescription(smokeAndCost.smoked, sufix: "SMOKED")
+        //spend
+        smoked.text  = String(smokeAndCost.cost)
+        
+        let defaults = UserDefaultsDataController()
+        let userDefaults:UserDefaults = defaults.loadUserDefaults()
+        
+        //balance
+        cost.text = String(userDefaults.dailyGoal - Int(smokeAndCost.cost))// decimalFormatToCurency(smokeAndCost.cost)
+     
     }
     
     
     func  drawChart()
     {
-        
-        
         if(segmentGraphType.selectedSegmentIndex == 0){
         
             calculateAdnDrowChartPie()
@@ -469,7 +490,7 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
     }
     
 
-
+//MARK: SET PIE
 //load data
     func setChartPie(_ dataPoints: [String], values: [Double]) {
         
@@ -482,15 +503,33 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         
         let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         
-        pieChartDataSet.yValuePosition = .insideSlice
+        pieChartDataSet.yValuePosition = .outsideSlice
         
         pieChartDataSet.colors = ColorTemplates.chartPieColors()// ChartColorTemplates.joyful()
+        pieChartDataSet.sliceSpace = 3
+        pieChartDataSet.selectionShift = 8//
+        pieChartDataSet.xValuePosition = .insideSlice
+        pieChartDataSet.yValuePosition = .outsideSlice
+        
+        
+        pieChartDataSet.valueLinePart1OffsetPercentage = 0.85
+        pieChartDataSet.valueLinePart1Length = 0.3
+        pieChartDataSet.valueLinePart2Length = 0.1
+        pieChartDataSet.valueLineWidth = 1
+        pieChartDataSet.valueLineColor = UIColor.white
+        
         
         let numberFormatter = NumberFormatter()
         numberFormatter.generatesDecimalNumbers = false
+        numberFormatter.maximumFractionDigits = 0
+        numberFormatter.numberStyle    = .percent
+        numberFormatter.multiplier     = 1.00
+        //numberFormatter.multiplier = @1.f
         
         let pieChartData = PieChartData(dataSet: pieChartDataSet)
-        pieChartData.setDrawValues(false)
+        pieChartData.setDrawValues(true)
+        
+        pieChartData.setValueFormatter(DefaultValueFormatter(formatter: numberFormatter))
         
         pieChart.data = pieChartData
         
@@ -830,7 +869,7 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         horizontChart.xAxis.axisMinimum = 0
         horizontChart.xAxis.axisMaximum = Double(newxVals.count - 1)
         
-        barChart.noDataText = "You need to provide data for the chart."
+        barChart.noDataText = "you don't spend at this period"
         var dataEntries: [BarChartDataEntry] = []
         let formato:HorizontalBarChartFormatter = HorizontalBarChartFormatter()
         
@@ -868,7 +907,7 @@ class SummaryViewController: GlobalUIViewController, UIPickerViewDataSource,UIPi
         let xaxis:XAxis = XAxis()
         
         
-        barChart.noDataText = "You need to provide data for the chart."
+        barChart.noDataText = "you don't spend at this period"
         var dataEntries1: [BarChartDataEntry] = []
         var dataEntries2: [BarChartDataEntry] = []
         var dataEntry1: BarChartDataEntry
