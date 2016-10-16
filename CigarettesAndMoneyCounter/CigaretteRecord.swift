@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+
 /*record that will fetched from coredata*/
 open class CigaretteRecord: NSManagedObject {
 
@@ -69,7 +70,11 @@ open class CigaretteRecord: NSManagedObject {
     fetchRequest.propertiesToFetch = [expressionSumCigarettes]
     fetchRequest.resultType = .dictionaryResultType
     
-        let result = NSFetchedResultsController<CigaretteRecord>(fetchRequest: fetchRequest as! NSFetchRequest<CigaretteRecord>, managedObjectContext: (UIApplication.shared.delegate as! AppDelegate).managedObjectContext!, sectionNameKeyPath: "groupByMonth", cacheName: nil)
+    
+    let delegate = delegateApplication
+    
+
+        let result = NSFetchedResultsController<CigaretteRecord>(fetchRequest: fetchRequest as! NSFetchRequest<CigaretteRecord>, managedObjectContext: delegate.managedObjectContext!, sectionNameKeyPath: "groupByMonth", cacheName: nil)
     
 
         return result

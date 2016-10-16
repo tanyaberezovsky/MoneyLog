@@ -17,12 +17,12 @@ class UserDefaults{
     
     var levelAsNeeded = 0
     var levelOfEnjoyment = 0
-    var dailyGoal = 0
-    var todaySmoked = 0.0
-    var dateLastCig: Date!
-    var reason: String!
+    var dailyGoal:Int = 0 //month budget
+    var todaySmoked = 0.0 //today spend
+    var dateLastCig: Date! //last date spend
+    var reason: String!//category
     var minimalModeOn: Bool!
-    var averageCostOfOnePack = 0.0
+    var averageCostOfOnePack = 0.0//monthly spend
     var averageCostOfOneCigarett = 0.0
     var amountOfCigarettsInOnePack = 0
     var showQuestion1: Bool!
@@ -70,12 +70,7 @@ class UserDefaultsDataController{
     }
     
     @objc  func saveLastAddedCig(_ lastDateCig: Date, todaySmoked: Double) {
-        
-        if lastDateCig.timeIntervalSinceNow.sign == .minus {
-            //myDate is earlier than Now (date and time)
-        } else {
-            //myDate is equal or after than Now (date and time)
-        }
+       
         if newDateIsToday(lastDateCig){
 
             let defaults = Foundation.UserDefaults.standard
@@ -85,6 +80,38 @@ class UserDefaultsDataController{
             defaults.set(lastDateCig, forKey: "dateLastCig")
          //   defaults.synchronize()
         }
+    }
+   
+    @objc  func saveLastAddedMonthExpence(_ lastDateCig: Date, amount: Double) {
+        let defaults = Foundation.UserDefaults.standard
+        if newDateIsToday(lastDateCig){
+            defaults.set(amount, forKey: "averageCostOfOnePack")
+            defaults.set(lastDateCig, forKey: "dateLastCig")
+        }
+        else
+        {
+            let userDefaults:UserDefaults = loadUserDefaults()
+            
+            if let lastCig = userDefaults.dateLastCig{
+                let calcRet = calculateLastCigaretTime(lastCig)
+                
+                if calcRet.bLastRecordWasThisMonth{
+                    defaults.set(amount, forKey: "averageCostOfOnePack")
+                 //   defaults.set(lastDateCig, forKey: "dateLastCig")
+                }
+                
+            }
+            else{
+                let calcRet = calculateLastCigaretTime(lastDateCig)
+                
+                if calcRet.bLastRecordWasThisMonth{
+                    defaults.set(amount, forKey: "averageCostOfOnePack")
+                    defaults.set(lastDateCig, forKey: "dateLastCig")
+                }
+            }
+            
+        }
+        
     }
     
     func newDateIsToday(_ newDate: Date) -> Bool
@@ -129,7 +156,7 @@ class UserDefaultsDataController{
         if (defaults.object(forKey: "levelAsNeeded") == nil) {
            //then it loads for the first time
             //init defaults values for start up
-            userDefaults.dailyGoal = 1200
+            userDefaults.dailyGoal = 1200//budget
             userDefaults.averageCostOfOnePack = 10
             userDefaults.amountOfCigarettsInOnePack = 20
             userDefaults.averageCostOfOneCigarett = 10 / 20

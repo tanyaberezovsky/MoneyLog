@@ -13,6 +13,8 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    
+
     var window: UIWindow?
    
     fileprivate let defaults = UserDefaultsDataController()

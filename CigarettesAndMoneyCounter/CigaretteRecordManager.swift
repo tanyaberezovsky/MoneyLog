@@ -50,17 +50,25 @@ class CigaretteRecordManager {
         } catch _ {
         }
         
-        var todaySmoked = 1.0
+        var todaySmoked = amount
     
+        var monthlySpend = todaySmoked
         
         if let lastCig = userDefaults.dateLastCig{
             let calcRet = calculateLastCigaretTime(lastCig)
+            
             if calcRet.bLastCigWasToday == true{
-                todaySmoked = userDefaults.todaySmoked + amount
+                todaySmoked += userDefaults.todaySmoked
             }
+            
+            if calcRet.bLastRecordWasThisMonth{
+                monthlySpend  += userDefaults.averageCostOfOnePack
+            }
+            
         }
-        defaults.saveLastAddedCig(addedDate, todaySmoked: todaySmoked)
         
+        defaults.saveLastAddedCig(addedDate, todaySmoked: todaySmoked)
+        defaults.saveLastAddedMonthExpence(addedDate, amount: monthlySpend)
     
     }
 

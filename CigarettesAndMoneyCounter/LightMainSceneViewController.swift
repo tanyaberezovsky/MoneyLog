@@ -14,12 +14,14 @@ class LightMainSceneViewController: GlobalUIViewController, UIPopoverPresentatio
 
     // MARK: Properties
     
+    //TODAY SPENDING
     @IBOutlet weak var txtLastCig: UILabel!
     
     @IBOutlet weak var circularLoader: CircularLoaderView!
     
     @IBOutlet weak var addSmoke: UIButton!
     
+    //MONTHLY BALANCE
     @IBOutlet weak var dailySmokedCigs: UILabel!
     
     fileprivate let defaults = UserDefaultsDataController()
@@ -68,30 +70,43 @@ class LightMainSceneViewController: GlobalUIViewController, UIPopoverPresentatio
     func LoadDefaultValues(){
         let userDefaults:UserDefaults = UserDefaultsDataController().loadUserDefaults()
         
-        var todaySmoked = 0.0
-
+        var todaySpend = 0
+        var balance = 0
+        var spentInMonth = 0
+        var bLastRecordWasThisMonth:Bool = false
         if let lastCig = userDefaults.dateLastCig{
             let calcRet = calculateLastCigaretTime(lastCig)
-            txtLastCig.text = calcRet.txtLastCig
+           // txtLastCig.text = calcRet.txtLastCig
             if calcRet.bLastCigWasToday == true{
-                todaySmoked = userDefaults.todaySmoked
+                todaySpend = Int(userDefaults.todaySmoked)
+                txtLastCig.text = String(format:  "SPEND TODAY %d", Int(todaySpend))
             }
- 
+            if calcRet.bLastRecordWasThisMonth{
+                bLastRecordWasThisMonth = true
+                spentInMonth = Int(userDefaults.averageCostOfOnePack)
+            }
         }
         else{
-            txtLastCig.text = "TIME SINCE LAST CIGARETTE"// "How long has it been since last cigarette"//"Do not smoke at all"  "Free of smoking time"
+            todaySpend = 0
+            txtLastCig.text = "SPEND TODAY 0"// "How long has it been since last cigarette"//"Do not smoke at all"  "Free of smoking time"
         }
-            dailySmokedCigs.attributedText = dailySmokedToText(Int(todaySmoked), limit: userDefaults.dailyGoal)
+        //balance = budget - spentInMonth
+        balance = userDefaults.dailyGoal - spentInMonth
+        
+        //show balance
+        dailySmokedCigs.text = String(format:"%d", balance)
+        //to del
+        txtLastCig.text = String(format:"BALANCE %d", balance)
+        dailySmokedCigs.text = String(format:"%d", todaySpend)
+        //dailySmokedCigs.attributedText =dailySmokedToText(Int(todaySmoked), limit: userDefaults.dailyGoal)
             
         roundButtonConers()
       
-        if let lastCig = userDefaults.dateLastCig{
-            if(Calendar.current.isDateInToday(lastCig as Date)){
-                loadCircularLoader(userDefaults.todaySmoked, dailyLimit: userDefaults.dailyGoal)
-            }
+        if bLastRecordWasThisMonth{
+            loadCircularLoader(userDefaults.dailyGoal - balance, budget: userDefaults.dailyGoal)
         }
         
-         circularLoader.setNeedsDisplay()
+        circularLoader.setNeedsDisplay()
     }
 
     
@@ -117,10 +132,10 @@ class LightMainSceneViewController: GlobalUIViewController, UIPopoverPresentatio
     }
     
     
-    func loadCircularLoader(_ todaySmoked: Double, dailyLimit: Int)
+    func loadCircularLoader(_ balance: Int, budget: Int)
     {
-        if(todaySmoked>0){
-        let circileAngle: Double = Double(todaySmoked) / Double(dailyLimit) * 100;
+        if(balance>0){
+        let circileAngle: Double = Double(balance) / Double(budget) * 100;
         
         circularLoader.toValue = CGFloat( circileAngle);
         }

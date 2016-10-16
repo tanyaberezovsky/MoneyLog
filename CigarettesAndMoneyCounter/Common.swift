@@ -11,6 +11,9 @@ import Foundation
 import UIKit
 
 
+let delegateApplication = UIApplication.shared.delegate as! AppDelegate
+
+
 func AlertError(_ message: String){
     let alert = UIAlertView()
     alert.title = "Error"
@@ -47,10 +50,11 @@ return: last cigarette was x years x month x days x hours x minutes ago
 }
 */
 
-func calculateLastCigaretTime(_ earlierDate: Date)  -> (txtLastCig: String, bLastCigWasToday: Bool){
+func calculateLastCigaretTime(_ earlierDate: Date)  -> (txtLastCig: String, bLastCigWasToday: Bool, bLastRecordWasThisMonth: Bool){
     
     let laterDate = Date()
     var bLastCigWasToday:Bool = true
+    var bLastRecordWasThisMonth: Bool = true
     
     if(!Calendar.current.isDateInToday(earlierDate)){
         bLastCigWasToday  = false    }
@@ -58,36 +62,47 @@ func calculateLastCigaretTime(_ earlierDate: Date)  -> (txtLastCig: String, bLas
     let components = (Calendar.current as NSCalendar).components([.second, .minute, .hour, .day, .month, .year], from: earlierDate,
         to: laterDate, options: [])
     
-    var arrStrDate = [String]()
+   // var arrStrDate = [String]()
     var retStr:String = "LAST CIGARETTE"
     retStr = ""
-    var counter = 0;
+  //  var counter = 0;
     
     
     if components.year!>0 {
-        arrStrDate.append(createSmokeText(components.year!, unitName:"YEARS")); bLastCigWasToday=false;
-        if components.month!>0 {arrStrDate.append(createSmokeText(components.month!, unitName:"MONTHS")); bLastCigWasToday=false;}
-        counter += 1
+        //arrStrDate.append(createSmokeText(components.year!, unitName:"YEARS"));
+        bLastCigWasToday=false;
+        bLastRecordWasThisMonth = false;
+       // if components.month!>0 {
+                //arrStrDate.append(createSmokeText(components.month!, unitName:"MONTHS"));
+        //    bLastCigWasToday=false;}
+        //counter += 1
     }
-    else if components.month!>0 {arrStrDate.append(createSmokeText(components.month!, unitName:"MONTHS")); bLastCigWasToday=false;
-        if components.day!>0 {arrStrDate.append(createSmokeText(components.day!, unitName:"DAYS")); bLastCigWasToday=false;}
+    else if components.month!>0 {
+      //  arrStrDate.append(createSmokeText(components.month!, unitName:"MONTHS"));
+        bLastCigWasToday=false;
+        bLastRecordWasThisMonth = false
+        //if components.day!>0 {
+        //    arrStrDate.append(createSmokeText(components.day!, unitName:"DAYS"));
+        //    bLastCigWasToday=false;}
     }
-    else if components.day!>0 {arrStrDate.append(createSmokeText(components.day!, unitName:"DAYS")); bLastCigWasToday=false;
-        if components.hour!>0 {arrStrDate.append(createSmokeText(components.hour!, unitName:"HOURS"))}
+    else if components.day!>0 {
+    //    arrStrDate.append(createSmokeText(components.day!, unitName:"DAYS"));
+        bLastCigWasToday=false;
+   //     if components.hour!>0 {arrStrDate.append(createSmokeText(components.hour!, unitName:"HOURS"))}
     }
-    else{
-        if components.hour!>0 {arrStrDate.append(createSmokeText(components.hour!, unitName:"HOURS"))
-         if components.minute!>0 {arrStrDate.append(" \(components.minute!) MIN")}
-        }
-        else if components.minute!>0 {arrStrDate.append(createSmokeText(components.minute!, unitName:"MINUTES"))}
-    }
-    if arrStrDate.count == 0
-    {retStr = "JUST SMOKED A CIGARETTE"}
-    else
-    {retStr +=  arrStrDate.joined(separator: "") + " FREE OF SMOKING"//" AGO"
-    }
+//    else{
+//        if components.hour!>0 {arrStrDate.append(createSmokeText(components.hour!, unitName:"HOURS"))
+//         if components.minute!>0 {arrStrDate.append(" \(components.minute!) MIN")}
+//        }
+//        else if components.minute!>0 {arrStrDate.append(createSmokeText(components.minute!, unitName:"MINUTES"))}
+//    }
+//    if arrStrDate.count == 0
+//    {retStr = "JUST SMOKED A CIGARETTE"}
+//    else
+//    {retStr +=  arrStrDate.joined(separator: "") + " FREE OF SMOKING"//" AGO"
+//    }
     
-    return (retStr, bLastCigWasToday)
+    return (retStr, bLastCigWasToday, bLastRecordWasThisMonth)
 }
 
 func decimalFormatToString(_ num: Double) -> String{
