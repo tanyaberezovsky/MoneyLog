@@ -156,7 +156,7 @@ class UserDefaultsDataController{
         if (defaults.object(forKey: "levelAsNeeded") == nil) {
            //then it loads for the first time
             //init defaults values for start up
-            userDefaults.dailyGoal = 1200//budget
+            userDefaults.dailyGoal = 10000//budget
             userDefaults.averageCostOfOnePack = 10
             userDefaults.amountOfCigarettsInOnePack = 20
             userDefaults.averageCostOfOneCigarett = 10 / 20

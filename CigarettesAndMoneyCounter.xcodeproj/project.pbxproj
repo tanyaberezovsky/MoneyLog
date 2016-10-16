@@ -703,6 +703,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: cokacolata@gmail.com (FBXE88PM82)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CigarettesAndMoneyCounter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TanyaBerezovsky.SmokieStopie;
 				PRODUCT_NAME = CigarettesAndMoneyCounter;
@@ -722,6 +723,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tatiana Berezovsky (HS2EBXX3A9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CigarettesAndMoneyCounter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TanyaBerezovsky.SmokieStopie;
 				PRODUCT_NAME = CigarettesAndMoneyCounter;

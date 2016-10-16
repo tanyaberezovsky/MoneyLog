@@ -12,16 +12,11 @@ import UIKit
 class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelegate {
   // MARK: Properties
     @IBOutlet weak var reason: UIButton!
-    
-    @IBOutlet var averageCost: UITextField!
    
-    @IBOutlet weak var levelAsNeeded: UISegmentedControl!
     var reasonText:String!
     var tempValue:String!
      
 
-    @IBOutlet weak var levelOfEnjoy: UISegmentedControl!
-    @IBOutlet weak var amountOfCigarettsInOnePack: UITextField!
     @IBOutlet var dailyGoal: UITextField!
     
     @IBOutlet weak var minimalMode: UISwitch!
@@ -47,17 +42,6 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
         view.layer.insertSublayer(gradient, at: 0)
     }
     
-    @IBAction func costPack(_ sender: UITextField) {
-        tempValue = sender.text
-        sender.text = ""
-    }
-    
-    @IBAction func costPackEditingEnd(_ sender: UITextField) {
-        if (sender.text == "")
-        {
-            sender.text = tempValue
-        }
-    }
     
     @IBAction func dailyLimitEditingBegin(_ sender: UITextField) {
         tempValue = sender.text
@@ -71,9 +55,7 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
     }
     
     
-    @IBAction func switchOnChange(_ sender: UISwitch) {
-        minimalModeOn = sender.isOn
-    }
+  
     
     override func didMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
@@ -87,24 +69,13 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
         
         let userDefaults:UserDefaults = defaults.loadUserDefaults()
         
-            if isNumeric(averageCost.text!){
-                userDefaults.averageCostOfOnePack = averageCost.text!.toDouble()!
-            }
-
         
-            if isNumeric(amountOfCigarettsInOnePack.text!){
-            userDefaults.amountOfCigarettsInOnePack = Int(amountOfCigarettsInOnePack.text!)!
-            }
-
             userDefaults.averageCostOfOneCigarett = userDefaults.averageCostOfOnePack / Double(userDefaults.amountOfCigarettsInOnePack)
         
             if isNumeric(dailyGoal.text!){
                 userDefaults.dailyGoal = Int(dailyGoal.text!)!}
         
 
-                userDefaults.levelOfEnjoyment = levelOfEnjoy.selectedSegmentIndex
-        
-                userDefaults.levelAsNeeded = levelAsNeeded.selectedSegmentIndex
         
             if (reasonText != nil)
             {
@@ -161,36 +132,13 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
         layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
         
         
-        layerLevelAsNeeded = levelOfEnjoy.layer
-        layerLevelAsNeeded.cornerRadius = 5
-        layerLevelAsNeeded.borderWidth = 0.5
-        layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
-        
-        
-        layerLevelAsNeeded = levelAsNeeded.layer
-        layerLevelAsNeeded.cornerRadius = 5
-        layerLevelAsNeeded.borderWidth = 0.5
-        layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
-        
-        
         
         layerLevelAsNeeded = dailyGoal.layer
         layerLevelAsNeeded.cornerRadius = 5
         layerLevelAsNeeded.borderWidth = 0.5
         layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
         
-        
-        layerLevelAsNeeded = amountOfCigarettsInOnePack.layer
-        layerLevelAsNeeded.cornerRadius = 5
-        layerLevelAsNeeded.borderWidth = 0.5
-        layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
-        
-        
-        
-        layerLevelAsNeeded = averageCost.layer
-        layerLevelAsNeeded.cornerRadius = 5
-        layerLevelAsNeeded.borderWidth = 0.5
-        layerLevelAsNeeded.borderColor = UIColors.Segment.selected.cgColor
+     
     }
     
     //++++++++++++++++++++++++++++++++++++
@@ -200,15 +148,9 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
         let defaults = UserDefaultsDataController()
         let userDefaults:UserDefaults = defaults.loadUserDefaults()
         
-        averageCost.text = decimalFormatToCurency(userDefaults.averageCostOfOnePack)
         
         dailyGoal.text = String(userDefaults.dailyGoal)
         
-        levelOfEnjoy.selectedSegmentIndex = userDefaults.levelOfEnjoyment
-        
-        
-        levelAsNeeded.selectedSegmentIndex = userDefaults.levelAsNeeded 
-    
         
         reasonText = String(userDefaults.reason)
         

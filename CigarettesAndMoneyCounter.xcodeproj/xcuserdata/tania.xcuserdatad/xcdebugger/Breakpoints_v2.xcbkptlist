@@ -1693,38 +1693,6 @@
             endingLineNumber = "147"
             landmarkName = "saveContext()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CigarettesAndMoneyCounter.AppDelegate.saveContext () -&gt; ()"
-                  moduleName = "CigarettesAndMoneyCounter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tania/Projects/xcode6/MoneyLog/CigarettesAndMoneyCounter/AppDelegate.swift"
-                  timestampString = "498314502.353193"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "22">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CigarettesAndMoneyCounter.AppDelegate.saveContext () -&gt; ()"
-                  moduleName = "CigarettesAndMoneyCounter"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tania/Projects/xcode6/MoneyLog/CigarettesAndMoneyCounter/AppDelegate.swift"
-                  timestampString = "498314502.355651"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "54">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2132,11 +2100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CigarettesAndMoneyCounter/UserDefaultsController.swift"
-            timestampString = "498254288.651373"
+            timestampString = "498316098.404997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2162,11 +2130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CigarettesAndMoneyCounter/UserDefaultsController.swift"
-            timestampString = "498254288.651373"
+            timestampString = "498316098.404997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "myColumnDidSelected(_:text:segueName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2672,11 +2640,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CigarettesAndMoneyCounter/UserDefaultsController.swift"
-            timestampString = "498254288.651373"
+            timestampString = "498316098.404997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "SaveDafaultsTouch()"
             landmarkType = "7">
          </BreakpointContent>
