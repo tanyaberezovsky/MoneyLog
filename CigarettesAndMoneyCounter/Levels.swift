@@ -20,7 +20,7 @@ struct Levels {
 }
 
 
-
+ 
 let descriptionNeeded = ["Not need at all",
     "Could avoid","Desired","Must have", "Absolutely necessary"]
 
