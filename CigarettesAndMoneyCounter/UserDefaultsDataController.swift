@@ -28,7 +28,7 @@ class UserDefaults{
     var showQuestion1: Bool!
     var coreDataReasonsEntityInited: Bool!
     
-}
+} 
 
 class UserDefaultsDataController{
     

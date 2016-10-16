@@ -18,7 +18,7 @@ class UserDefaultsController: GlobalUIViewController,TableLevelsControllerDelega
     @IBOutlet weak var levelAsNeeded: UISegmentedControl!
     var reasonText:String!
     var tempValue:String!
-    
+     
 
     @IBOutlet weak var levelOfEnjoy: UISegmentedControl!
     @IBOutlet weak var amountOfCigarettsInOnePack: UITextField!

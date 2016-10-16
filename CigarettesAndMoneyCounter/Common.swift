@@ -31,7 +31,7 @@ func createSmokeText(_ unitTimeValue:NSInteger, unitName:String) -> String
     if unitTimeValue == 1 {  unitName1 = unitName.substring(to: unitName.characters.index(unitName.endIndex, offsetBy: -1))}
     return " \(unitTimeValue) \(unitName1)"
 }
-
+ 
 /*
 reseive date and return string
 if date was in past hour
